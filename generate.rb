@@ -15,20 +15,20 @@ FileUtils.rm_f Dir["#{PREFIX}-*"]
 
 counter = 1
 mustache_list.each_slice(2) do |group|
-	puts 'Generating PDF for:'
-	puts group.flatten.map{|f| ' * ' + f.values.join(',')}.join("\n")
+  puts 'Generating PDF for:'
+  puts group.flatten.map{|f| ' * ' + f.values.join(',')}.join("\n")
 
-	data = {
-		group1: group[0],
-		group2: group[1],
-		has_group2: !group[1].nil? && !group[1].empty?
-	}
+  data = {
+    group1: group[0],
+    group2: group[1],
+    has_group2: !group[1].nil? && !group[1].empty?
+  }
 
-	template = File.read('template.html')
-	output   = Mustache.render(template, data)
-	filename = "#{PREFIX}-#{counter}"
- 	File.open("#{filename}.html", 'w') { |f| f.write(output) }
- 	
+  template = File.read('template.html')
+  output   = Mustache.render(template, data)
+  filename = "#{PREFIX}-#{counter}"
+  File.open("#{filename}.html", 'w') { |f| f.write(output) }
+  
   `wkhtmltopdf -B 0 -L 0 -R 0 -T 0 --dpi 300 --orientation landscape --page-size A4 #{filename}.html #{filename}.pdf`
   
   counter += 1
