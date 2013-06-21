@@ -1,3 +1,4 @@
 *.txt
 *.yml
 *.pdf
+.DS_Store
